@@ -16,3 +16,4 @@ old_code/
 Data/
 **/__pycache__/
 **/.venv/
+**/venv/

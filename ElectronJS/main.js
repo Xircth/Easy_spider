@@ -163,7 +163,7 @@ function createWindow() {
             app.quit();
         }
     });
-    //调试模式
+    // 调试模式
     // mainWindow.webContents.openDevTools();
 }
 
