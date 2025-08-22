@@ -1,0 +1,6 @@
+execute/chrome*
+execute/Data
+
+ExecuteStage/build
+.vscode
+__pycache__

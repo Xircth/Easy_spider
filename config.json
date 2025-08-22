@@ -1,0 +1,18 @@
+{
+    "mysql_config": {
+        "host": "119.8.121.24",
+        "port": 3306,
+        "username": "root",
+        "password": "Aa2049589768.",
+        "database": "spider_data"
+    },
+    "redis_config": {
+        "host": "127.0.0.1",
+        "port": 12001,
+        "db": 0,
+        "log_pre": "spider:log:",
+        "log_TTL": 120,
+        "msg_pre": "spider:msg:",
+        "msg_TTL": 180
+    }
+}
