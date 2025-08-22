@@ -69,25 +69,42 @@ async def get_captcha():
         )
 
 @router.post("/login")
-async def login(uuid: str, captcha: str, db: Session = Depends(get_db)):
+async def login(request: Request, db: Session = Depends(get_db)):
     """
     用户登录
     
     Args:
-        uuid: 用户唯一标识
-        captcha: 验证码
+        request: HTTP请求对象
         db: 数据库会话
         
     Returns:
         登录结果，包含access-token
+        
+    Raises:
+        HTTPException: 当请求数据不完整或验证失败时抛出相应错误
     """
-    if not uuid or not captcha:
+    # 解析JSON请求体
+    try:
+        body = await request.json()
+        uuid = body.get("uuid")
+        captcha = body.get("captcha")
+        username = body.get("username")
+        password = body.get("password")
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="UUID和验证码不能为空"
+            detail="请求体格式错误，必须为有效的JSON"
+        )
+    
+    # 验证所有必需字段
+    if not all([uuid, captcha, username, password]):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="所有字段均不能为空"
         )
     
     # 验证验证码
+    print("验证验证码")
     stored_captcha = get_verification_code(uuid)
     if not stored_captcha:
         raise HTTPException(
@@ -102,11 +119,26 @@ async def login(uuid: str, captcha: str, db: Session = Depends(get_db)):
         )
     
     # 验证用户是否存在
-    user = UserService.get_user_by_username(db, uuid)
+    print("查询用户")
+    user = UserService.get_user_by_username(db, username)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="用户不存在"
+        )
+    
+    # 验证密码
+    import hashlib
+    md5 = hashlib.md5()
+    md5.update(password.encode('utf-8'))
+    hashed_password = md5.hexdigest()
+    
+    if user.hashed_password != hashed_password:
+        print("user:",user.hashed_password)
+        print("input:",hashed_password)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="密码错误"
         )
     
     if not user.is_active:
@@ -133,3 +165,5 @@ async def login(uuid: str, captcha: str, db: Session = Depends(get_db)):
         },
         message="登录成功"
     )
+    
+    

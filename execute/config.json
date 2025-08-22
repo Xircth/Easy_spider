@@ -5,7 +5,7 @@
     "debug": false,
     "copyright": 1,
     "sys_version": "x64",
-    "mysql_config_path": "./mysql_config.json",
+    "mysql_config_path": "./execute/mysql_config.json",
     "absolute_user_data_folder": "H:\\work\\Easy_spider\\ElectronJS\\user_data",
     "lang": "zh"
 }

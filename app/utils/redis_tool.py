@@ -37,7 +37,7 @@ def set_verification_code(uuid: str, code: str, expire: int = None) -> bool:
     """
     try:
         ttl = expire or redis_config["msg_TTL"]
-        key = f"{redis_config['msg_pre']}{uuid}"
+        key = f"{redis_config['code_pre']}{uuid}"
         r.setex(key, ttl, code)
         return True
     except Exception as e:
@@ -55,7 +55,7 @@ def get_verification_code(uuid: str) -> Optional[str]:
         验证码字符串，如果不存在则返回None
     """
     try:
-        key = f"{redis_config['msg_pre']}{uuid}"
+        key = f"{redis_config['code_pre']}{uuid}"
         return r.get(key)
     except Exception as e:
         print(f"获取验证码失败: {e}")
@@ -72,7 +72,7 @@ def delete_verification_code(uuid: str) -> bool:
         是否删除成功
     """
     try:
-        key = f"{redis_config['msg_pre']}{uuid}"
+        key = f"{redis_config['code_pre']}{uuid}"
         r.delete(key)
         return True
     except Exception as e:

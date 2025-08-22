@@ -12,7 +12,7 @@ import json
 # --saved_file_name 
 #chrome_win64/easyspider_executestage.exe --ids [12] --user_data 0 --server_address http://localhost:8074 --config_folder "H:/work/Easy_spider_reborn/execute/" --headless 1 --read_type local --config_file_name config.json --saved_file_name 
 #chrome_win64/easyspider_executestage.exe --ids [12] --user_data 0 --server_address http://localhost:8074 --config_folder "H:/work/Easy_spider_reborn/execute/" --headless 1 --read_type local --config_file_name config.json --saved_file_name
-win64_path = "chrome_win64/easyspider_executestage.exe"
+win64_path = "execute/chrome_win64/easyspider_executestage.exe"
 
 
 def generate_command(execute_path,
@@ -53,7 +53,12 @@ def summon_subprocess(command):
     
 
 if __name__ == "__main__":
-    summon_subprocess(generate_command(win64_path, [12], 0, "http://localhost:8074", "H:/work/Easy_spider_reborn/execute/", 1, "local", "config.json", ""))
+    print(" ".join(generate_command(win64_path, [2], 0, "http://localhost:8074", "H:/work/Easy_spider_reborn/execute/", 1, "local", "config.json", "")))
+    summon_subprocess(generate_command(win64_path, [2], 0, "http://localhost:8074", "H:/work/Easy_spider_reborn/execute/", 1, "local", "./config.json", ""))
+
+'''
+execute/chrome_win64/easyspider_executestage.exe --ids [2] --user_data 0 --server_address http://localhost:8074 --config_folder H:/work/Easy_spider_reborn/execute/ --headless 1 --read_type local --config_file_name ./config.json --saved_file_name
 
 
+'''
 

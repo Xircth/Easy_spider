@@ -13,6 +13,7 @@
         "log_pre": "spider:log:",
         "log_TTL": 120,
         "msg_pre": "spider:msg:",
+        "code_pre": "spider:code:",
         "msg_TTL": 180
     }
 }

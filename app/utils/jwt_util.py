@@ -1,4 +1,4 @@
-import jwt
+import jwt as pyjwt
 from datetime import datetime, timedelta
 from typing import Dict, Any
 from fastapi import HTTPException, status
@@ -32,7 +32,7 @@ def create_access_token(data: Dict[str, Any], expires_delta: timedelta = None) -
     else:
         expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = pyjwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 def verify_access_token(token: str) -> Dict[str, Any]:
@@ -49,15 +49,15 @@ def verify_access_token(token: str) -> Dict[str, Any]:
         HTTPException: 当token无效或过期时抛出
     """
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = pyjwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
-    except jwt.ExpiredSignatureError:
+    except pyjwt.ExpiredSignatureError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token已过期",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    except jwt.JWTError:
+    except pyjwt.JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="无效的Token",

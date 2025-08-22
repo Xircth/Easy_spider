@@ -1,7 +1,1 @@
-{
-    "host": "119.8.121.24",
-    "port": 3306,
-    "username": "root",
-    "password": "Aa2049589768.",
-    "database": "spider_data"
-}
+{"host": "119.8.121.24", "port": 3306, "username": "root", "password": "Aa2049589768.", "database": "spider_data"}

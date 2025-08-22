@@ -2220,9 +2220,9 @@ if __name__ == '__main__':
         options.add_extension("EasySpider/resources/app/XPathHelper.crx")
     else:
         cwd = os.getcwd()
-        options.binary_location = cwd + "./chrome_win64/chrome.exe"  # 指定chrome位置
-        driver_path = "./chrome_win64/chromedriver_win64.exe"
-        options.add_extension("XPathHelper.crx")
+        options.binary_location ="execute/chrome_win64/chrome.exe"  # 指定chrome位置
+        driver_path = "execute/chrome_win64/chromedriver_win64.exe"
+        options.add_extension("execute/XPathHelper.crx")
         
 
     options.add_experimental_option(
@@ -2325,7 +2325,7 @@ if __name__ == '__main__':
                 print("无法连接到服务器，请确保EasySpider主程序正在运行，或者您可以将--read_type参数更改为'local'，以实现从本地任务文件中读取任务信息而无需保持EasySpider主程序运行。")
         else:
             print("local")
-            local_folder = os.path.join(os.getcwd(), "execution_instances")
+            local_folder = os.path.join(os.getcwd(), "execute/tasks")
             if sys.platform == "darwin":
                 user_folder = os.path.expanduser(
                 "~/Library/Application Support/EasySpider/")

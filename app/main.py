@@ -6,26 +6,25 @@ from app.database import engine, Base
 from sqlalchemy import text
 from app.database import get_db
 from app.core.security import JWTBearer, get_current_user
-
-app = FastAPI(title="Pulgin_Project", version="1.0.0")
-
-# 使用正确的全局认证配置方式
+from app.utils.config_init import config_init
 app = FastAPI(
     title="Pulgin_Project",
-    version="1.0.0"
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)
 
-# # 注册异常处理器
-# setup_exception_handlers(app)
 @app.on_event("startup")
 async def startup_event():
     """
     应用启动时的事件处理
     可以在这里进行数据库连接测试等初始化操作
     """
+    config_init()
+    print("mysql配置成功")
     # 测试数据库连接
     try:
         db = next(get_db())
