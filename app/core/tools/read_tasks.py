@@ -58,7 +58,7 @@ def _get_task_by_id(id):
         print(f"读取文件 {task_dir} 时出错: {e}")
                     
 def read_logs(id,last_n,save_name):
-    logs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', '..', 'execute', 'Data')
+    logs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', '..', 'Data')
     logs_dir = os.path.abspath(logs_dir)
     log_dir = logs_dir + '\\' + "Task_" + str(id) + '\\' + save_name +'.log'
     try:

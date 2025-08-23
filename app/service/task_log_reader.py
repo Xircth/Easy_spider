@@ -1,4 +1,4 @@
-log_path = "./execute/Data"
+log_path = "./Data"
 # 读取任务的日志最后n行
 def log_reader(E_id,last_n,task_name):
     task_log_path = log_path + "/Task_" + str(E_id) + "/" + task_name +".log"
