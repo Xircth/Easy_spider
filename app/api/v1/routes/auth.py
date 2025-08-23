@@ -148,7 +148,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
         )
     
     # 生成JWT token
-    access_token_expires = None  # 使用默认过期时间
+    access_token_expires = 3000000  # 使用默认过期时间
     access_token = create_access_token(
         data={"sub": user.username, "user_id": user.id}
     )

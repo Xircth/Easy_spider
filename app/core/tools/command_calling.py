@@ -43,14 +43,17 @@ def generate_command(execute_path,
 def summon_subprocess(command):
     process = subprocess.Popen(
         command,
-        stdout=subprocess.PIPE, 
-        stderr=subprocess.STDOUT, 
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         text=True,
         bufsize=1
     )
+    # 使用 communicate() 安全地读取输出，避免管道阻塞导致子进程无法退出
+    for line in iter(process.stdout.readline, ''):
+        print(line.rstrip())
+    process.stdout.close()
     process.wait()
-    print("[sys]","end")
-    
+    print("[sys]", "end")
 
 if __name__ == "__main__":
     print(" ".join(generate_command(win64_path, [2], 0, "http://localhost:8074", "H:/work/Easy_spider_reborn/execute/", 1, "local", "config.json", "")))

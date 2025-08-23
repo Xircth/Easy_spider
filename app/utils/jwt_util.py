@@ -8,7 +8,7 @@ from app.utils.config_init import get_config
 jwt_config = get_config("jwt_config") or {
     "secret_key": "your-super-secret-key-change-in-production",
     "algorithm": "HS256",
-    "access_token_expire_minutes": 30
+    "access_token_expire_minutes": 3000000
 }
 
 SECRET_KEY = jwt_config["secret_key"]
