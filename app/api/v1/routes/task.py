@@ -2,7 +2,7 @@ from fastapi import APIRouter,Depends
 from app.utils.result import ApiResponse
 import os
 from sqlalchemy.orm import Session
-from app.core.tools.read_tasks import read_tasks
+from app.core.tools.read_tasks import read_tasks,_get_task_by_id,read_logs
 from app.service.task_invoke import start_task
 from app.service.task_service import TaskService
 from app.database import get_db
@@ -20,14 +20,22 @@ def list():
     task_list = read_tasks()
     return ApiResponse.success(task_list)
 
+
+@router.get("/task")
+def get_task_by_id(id):
+    task = _get_task_by_id(id)
+    return ApiResponse.success(task)
+    
+
 @router.post("/invoke")
 def invoke_task(id):
     eid = start_task(id)
     return ApiResponse.success(eid)
 
 @router.get("/logs")
-def read_task_logs(E_id):
-    pass
+def read_task_logs(id,save_name):
+    logs = read_logs(id,50,save_name)
+    return ApiResponse.success(logs)
 
 @router.get("/status")
 def task_status(E_id, db: Session = Depends(get_db)):
