@@ -9,7 +9,6 @@ from app.database import get_db
 from typing import Generator
 
 router = APIRouter(prefix="/plugin", tags=["plugin"])
-# 移除全局 taskService 变量，改为每次请求创建新实例
 
 @router.get("/test")
 def test_endpoint():
