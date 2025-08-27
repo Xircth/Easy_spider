@@ -3,6 +3,7 @@ import time
 import uuid
 from app.service.task_service import TaskService
 from app.core.tools.command_calling import generate_command,summon_subprocess
+import sys
 
 taskService = None
 
@@ -14,17 +15,29 @@ class Task:
         self.created_time = time.time()
         
     
-    def run(self,task_id,E_id):
+    def run(self,task_id,E_id,platform):
         win64_path = "execute/chrome_win64/easyspider_executestage.exe"
-        cmd = generate_command(win64_path, 
-                         [task_id], 
-                         0, 
-                         "http://localhost:8074", 
-                         "H:/work/Easy_spider_reborn/execute/", 
-                         1, 
-                         "local", 
-                         "config.json", 
-                         "")
+        linux64_path = "execute/chrome_linux64/easyspider_executestage"
+        if platform == "win":
+            cmd = generate_command(win64_path, 
+                            [task_id], 
+                            0, 
+                            "http://localhost:8074", 
+                            "H:/work/Easy_spider_reborn/execute/", 
+                            1, 
+                            "local", 
+                            "config.json", 
+                            "")
+        elif platform == "linux":
+            cmd = generate_command(linux64_path, 
+                            [task_id], 
+                            0, 
+                            "http://localhost:8074", 
+                            "H:/work/Easy_spider_reborn/execute/", 
+                            1, 
+                            "local", 
+                            "config.json", 
+                            "")
         taskService.update_task_status_by_task_E_id(task_E_id=E_id,status="running")
         summon_subprocess(cmd)
         taskService.update_task_status_by_task_E_id(task_E_id=E_id,status="finished")
@@ -79,8 +92,15 @@ taskManager = TaskManager()
 def start_task(task_id):
     task = taskManager.create_task(task_id = task_id)
     print("任务",task_id,"已创建,运行id:",task.task_E_id)
+    platform = ""
+    if sys.platform == 'linux':
+        platform = "linux"
+    else:
+        platform = "win64"
     
-    thread = threading.Thread(target=task.run,args=(task_id,task.task_E_id,),daemon=True)
+    
+    
+    thread = threading.Thread(target=task.run,args=(task_id,task.task_E_id,platform,),daemon=True)
     thread.start()
     return task.task_E_id
 

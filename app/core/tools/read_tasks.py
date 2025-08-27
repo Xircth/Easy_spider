@@ -38,7 +38,7 @@ def read_tasks():
 def _get_task_by_id(id):
     tasks_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', '..', 'execute', 'tasks')
     tasks_dir = os.path.abspath(tasks_dir)
-    task_dir = tasks_dir + '\\' + str(id) + '.json'
+    task_dir = tasks_dir + '/' + str(id) + '.json'
     try:
         with open(task_dir, 'r', encoding='utf-8') as f:
             task_data = json.load(f)
@@ -60,7 +60,7 @@ def _get_task_by_id(id):
 def read_logs(id,last_n,save_name):
     logs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', '..', 'Data')
     logs_dir = os.path.abspath(logs_dir)
-    log_dir = logs_dir + '\\' + "Task_" + str(id) + '\\' + save_name +'.log'
+    log_dir = logs_dir + '/' + "Task_" + str(id) + '/' + save_name +'.log'
     try:
         with open(log_dir,'r', encoding='utf-8',errors='replace') as f:
             lines = tailer.tail(f,last_n)

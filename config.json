@@ -6,7 +6,6 @@
         "password": "Aa2049589768.",
         "database": "spider_data"
     },
-
     "redis_config": {
         "host": "127.0.0.1",
         "port": 12001,
