@@ -5,3 +5,4 @@ ExecuteStage/build
 .vscode
 __pycache__
 Data
+config.json

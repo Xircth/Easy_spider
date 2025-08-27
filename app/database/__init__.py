@@ -17,7 +17,7 @@ engine = create_engine(
 )
 
 # 创建SessionLocal类
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 
 # 创建Base类
 Base = declarative_base()

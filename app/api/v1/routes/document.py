@@ -11,7 +11,7 @@ router = APIRouter(prefix="/doc", tags=["doc"])
 def test_endpoint():
     return ApiResponse.success("hello world wow")
 
-@router.get("/", response_model=dict)
+@router.get("/docs", response_model=dict)
 def get_all_documents(db: Session = Depends(get_db)):
     """
     查询所有文档数据
